@@ -14,7 +14,11 @@ const schema = mongoose.Schema({
         lowercase: true,
         required: true,
     },
-    logo: String
+    logo: String,
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user'
+    }
     
     
 },{timestamps: true})

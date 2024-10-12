@@ -17,6 +17,10 @@ const schema = mongoose.Schema({
     category: {
         type: mongoose.Types.ObjectId,
         ref: 'category'
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user'
     }
     
     

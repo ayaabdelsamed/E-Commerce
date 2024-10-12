@@ -11,6 +11,10 @@ const schema = mongoose.Schema({
     discount: {
         type: Number,
         required: true,
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user'
     }
     
     

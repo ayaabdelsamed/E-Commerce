@@ -61,6 +61,10 @@ const schema = mongoose.Schema({
     brand: {
         type: mongoose.Types.ObjectId,
         ref: 'brand'
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user'
     }
 
 
