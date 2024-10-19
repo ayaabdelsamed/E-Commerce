@@ -1,23 +1,22 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 
 const schema = mongoose.Schema({
     code:{
         type: String,
+        unique: true,
         trim: true,
         required: true,
     },
-    expire: Date,
+    expires: Date,
     discount: {
         type: Number,
         required: true,
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'user'
     }
-    
-    
-},{timestamps: true})
+},{timestamps: true , versionKey: false})
 
 export const couponModel=mongoose.model('coupon',schema);

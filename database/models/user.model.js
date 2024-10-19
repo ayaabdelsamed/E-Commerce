@@ -40,6 +40,6 @@ const schema = mongoose.Schema({
     
     
     
-},{timestamps: true})
+},{timestamps: true , versionKey: false})
 
 export const userModel=mongoose.model('user',schema);

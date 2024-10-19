@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 
 const schema = mongoose.Schema({
     name: {
         type: String,
-        unique: [true,'name is unique'],
+        unique: [true,'name is required'],
         trim: true,
         required: true,
         minlength: [2,'too short name'],
@@ -16,11 +16,11 @@ const schema = mongoose.Schema({
     },
     logo: String,
     createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'user'
     }
     
     
-},{timestamps: true})
+},{timestamps: true , versionKey: false})
 
 export const brandModel=mongoose.model('brand',schema);

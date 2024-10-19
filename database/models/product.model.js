@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 
 const schema = mongoose.Schema({
     title: {
         type: String,
-        unique: [true,'title is unique'],
+        unique: [true,'title is required'],
         trim: true,
         required: true,
         minlength: [2,'too short title'],
@@ -19,10 +19,10 @@ const schema = mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        minlength: [2,'too short title'],
-        maxLength: [200,'too long description']
+        minlength: [30,'too short title'],
+        maxLength: [2000,'too long description']
     },
-    imgCover: String,
+    imgageCover: String,
     images: [],
     rateAvg: {
         type: Number,
@@ -36,8 +36,8 @@ const schema = mongoose.Schema({
     },
     price: {
         type: Number,
-        min: 0,
         required: true,
+        min: 0,
     },
     proceAfterDiscount: {
         type: Number,
@@ -51,26 +51,21 @@ const schema = mongoose.Schema({
     },
     sold: Number,
     category: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'category'
     },
     subCategory: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'subCategory'
     },
     brand: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'brand'
     },
     createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'user'
-    }
-
-
-
-    
-    
-},{timestamps: true})
+    } 
+},{timestamps: true , versionKey: false})
 
 export const productModel=mongoose.model('product',schema);
