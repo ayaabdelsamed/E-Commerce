@@ -1,18 +1,15 @@
 import { AppError } from "../utils/appError.js"
 
 
-export const validation = (schema)=>{
-    return (req,res,next)=>{
-        const {error} = Schema.validate({...req.params,...req.body,...req.query},{abortEarly:false})
+export const validate = (schema)=>{
+    return async (req,res,next)=>{
+        let {error} = schema.validate({...req.params,...req.body,...req.query},{abortEarly:false})
         if(!error){
             next()
-        }else{
-            let errList=[]
-            error.details.forEach((val) => {
-                errMsg.push(val.message)
-            });
-           // res.json(errMsg)
-            next(new AppError(errList,401))
+        } else{
+            let errMsg= error.details.map(err => err.message)
+            //res.json(errMsg)
+            next(new AppError(errMsg,401))
         }
     }
 }

@@ -13,6 +13,7 @@ const schema = mongoose.Schema({
         type: String,
         lowercase: true,
         required: true,
+        unique: [true,'slug is required'],
     },
     image: String,
     createdBy: {

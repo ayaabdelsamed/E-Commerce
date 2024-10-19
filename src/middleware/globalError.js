@@ -1,9 +1,9 @@
 
-
+let mode = 'prod'
 export const globalError = (err,req,res,next)=>{
-    let code = err.statuscode || 500
-    if(process.env.Mode == 'development')
-        res.status(err.statusCode).json({error:"error",message : err.message,code, stack:err.stack})
+    let code = err.statusCode || 500
+    if(mode == 'development')
+        res.status(code).json({error:"error",message : err.message,code, stack:err.stack})
     else
-        res.status(err.statusCode).json({error:"error",message})
+        res.status(code).json({error:"error",message : err.message})
 }

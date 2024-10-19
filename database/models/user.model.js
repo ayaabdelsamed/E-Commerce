@@ -36,10 +36,6 @@ const schema = mongoose.Schema({
         enum: ['user','admin'],
         default: 'user'
     },
-
-    
-    
-    
 },{timestamps: true , versionKey: false})
 
 export const userModel=mongoose.model('user',schema);
