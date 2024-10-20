@@ -12,15 +12,9 @@ const addCategory = async(req,res,next)=>{
 
 
 const getAllCategories = async(req,res,next)=>{
-    let categories =await categoryModel.find({})
+    let categories =await categoryModel.find()
     res.json({message:"success",categories})
 }
-
-// const getAllCategories = catchError(async (req, res, next) => {
-//     let categories = await Category.find();
-//     res.json({ message: "success", categories });
-// });
-
 
 
 const getSingleCategory = async(req,res,next)=>{
@@ -32,7 +26,6 @@ const getSingleCategory = async(req,res,next)=>{
 const updateCategory = async(req,res,next)=>{
     req.body.slug = slugify(req.body.name)
     let category =await categoryModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
-    //if(!category) return res.status(404).json({message:"Category not found"})
     category || next(new AppError('Category not found',404))
     !category || res.json({message:"success",category})
 }
