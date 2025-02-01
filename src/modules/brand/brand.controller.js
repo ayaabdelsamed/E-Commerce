@@ -5,6 +5,7 @@ import { brandModel } from '../../../database/models/brand.model.js'
 
 const addBrand = catchError(async(req,res,next)=>{
     req.body.slug = slugify(req.body.name)
+    req.body.logo = req.file.filename
     let brand = new brandModel(req.body) // بيرجع الكودل قبل ما يتسيف
     await brand.save()
     res.json({message:"success",brand})
@@ -25,7 +26,8 @@ const getSingleBrand = catchError(async(req,res,next)=>{
 })
 
 const updateBrand = catchError(async(req,res,next)=>{
-    req.body.slug = slugify(req.body.name)
+    if(req.body.slug) req.body.slug = slugify(req.body.name)
+    if(req.file) req.body.logo = req.file.filename
     let brand =await brandModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
     brand || next(new AppError('Brand not found',404))
     !brand || res.json({message:"success",brand})
