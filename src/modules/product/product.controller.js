@@ -4,7 +4,10 @@ import { catchError } from "../../middleware/catchError.js"
 import { productModel } from '../../../database/models/product.model.js'
 
 const addProduct = catchError(async(req,res,next)=>{
+    console.log(req.files);
     req.body.slug = slugify(req.body.title)
+    req.body.imageCover = req.files.imageCover[0].filename    
+    req.body.images = req.files.images.map(img=>img.filename)   
     let product = new productModel(req.body) // بيرجع الكودل قبل ما يتسيف
     await product.save()
     res.json({message:"success",product})

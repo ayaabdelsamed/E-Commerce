@@ -19,7 +19,7 @@ const schema = mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        minlength: [30,'too short title'],
+        minlength: [5,'too short title'],
         maxLength: [2000,'too long description']
     },
     imgageCover: String,
@@ -39,7 +39,7 @@ const schema = mongoose.Schema({
         required: true,
         min: 0,
     },
-    proceAfterDiscount: {
+    priceAfterDiscount: {
         type: Number,
         min: 0,
         required: true,
@@ -67,5 +67,10 @@ const schema = mongoose.Schema({
         ref: 'user'
     } 
 },{timestamps: true , versionKey: false})
+
+schema.post('init',function(doc){
+    doc.imageCover = "http://localhost:3000/uploads/products/"+doc.imageCover
+    doc.images = doc.images.map(img=>"http://localhost:3000/uploads/products/"+img)
+})
 
 export const productModel=mongoose.model('product',schema);

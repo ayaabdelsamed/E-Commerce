@@ -34,5 +34,5 @@ export const fileUpload = (folderName) => {
 export const uploadSingleFile = (fieldName, folderName) =>
   fileUpload(folderName).single(fieldName);
 
-export const uploadMixFiles = (arrayOfFields, folderName) =>
+export const uploadMixOfFiles = (arrayOfFields, folderName) =>
   fileUpload(folderName).fields(arrayOfFields);
