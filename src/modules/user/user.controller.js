@@ -1,11 +1,10 @@
-import slugify from 'slugify'
 import { AppError } from "../../utils/appError.js"
 import { catchError } from "../../middleware/catchError.js"
+import bcrypt from 'bcrypt'
 import { userModel } from '../../../database/models/user.model.js'
 import { deleteOne } from '../handlers/handlers.js'
 
 const addUser = catchError(async(req,res,next)=>{
-
     let user = new userModel(req.body) // بيرجع الكودل قبل ما يتسيف
     await user.save()
     res.json({message:"success",user})
