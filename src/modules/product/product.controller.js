@@ -2,6 +2,7 @@ import slugify from 'slugify'
 import { AppError } from "../../utils/appError.js"
 import { catchError } from "../../middleware/catchError.js"
 import { productModel } from '../../../database/models/product.model.js'
+import { deleteOne } from '../handlers/handlers.js'
 
 const addProduct = catchError(async(req,res,next)=>{
     console.log(req.files);
@@ -14,10 +15,14 @@ const addProduct = catchError(async(req,res,next)=>{
 
 })
 
-
+// http://localhost:3000/api/v1/products?page=2
 const getAllProducts = catchError(async(req,res,next)=>{
-    let products =await productModel.find()
-    res.json({message:"success",products})
+    let pageNumber= req.query.page * 1 || 1
+    if(req.query.page < 1) pageNumber=1
+    const limit = 2
+    let skip = (pageNumber - 1) * limit
+    let products =await productModel.find().skip(0).limit(limit)
+    res.json({message:"success",products,pageNumber})
 })
 
 
@@ -34,11 +39,7 @@ const updateProduct = catchError(async(req,res,next)=>{
     !product || res.json({message:"success",product})
 })
 
-const deleteProduct = catchError(async(req,res,next)=>{
-    let product =await productModel.findByIdAndDelete(req.params.id)
-    product || next(new AppError('product not found',404))
-    !product || res.json({message:"success",product})
-})
+const deleteProduct = deleteOne(productModel)
 
 export {
     addProduct,
