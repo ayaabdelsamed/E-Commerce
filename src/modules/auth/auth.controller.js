@@ -32,7 +32,8 @@ const changeUserPassword =catchError(async(req,res,next)=>{
 
     if(user&&bcrypt.compareSync(req.body.oldPassword,user.password)){
         
-        await userModel.findOneAndUpdate({email:req.body.email},{password:req.body.newPassword})
+        await userModel.findOneAndUpdate({email:req.body.email},
+            {password: req.body.newPassword , passwordChangedAt: Date.now()})
         let token = jwt.sign({userId:user._id,email:user.email},'aykey')
        // if(user.verifyEmail)
         return res.json({message:"success",token})
@@ -43,6 +44,30 @@ const changeUserPassword =catchError(async(req,res,next)=>{
     next(new AppError("incorrect mail or password",401))
 })
 
+const protectedRoutes =catchError(async(req,res,next)=>{
+    let {token} = req.headers
+    let userPayload = null;
+    if(!token) return next(new AppError("token not provided",401))
+
+    jwt.verify(token,'aykey',(err,payload)=>{
+        if(err) return next(new AppError(err,401))
+            userPayload = payload
+    })
+
+    let user = await userModel.findById(userPayload.userId)
+    if(!user) return next(new AppError("user not found",401))
+
+    if(user.passwordChangedAt){
+        let time =parseInt(user.passwordChangedAt.getTime()/1000)
+        if(time >userPayload.iat) return next(new AppError("invalid token ... login again",401))
+    }
+    req.user=user
+    next()
+    //1- check token ? exists or not
+    //2- verify token
+    //3- check userId
+    //4- token 
+})
 
 // const verify = catchError(async(req,res,next)=>{
 //     jwt.verify(req.params.token,process.env.JWT_KEY,async(err,decoded)=>{
@@ -57,5 +82,6 @@ const changeUserPassword =catchError(async(req,res,next)=>{
 export{
     signup,
     signin,
-    changeUserPassword
+    changeUserPassword,
+    protectedRoutes
 }

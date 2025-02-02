@@ -36,6 +36,7 @@ const schema = mongoose.Schema({
         enum: ['user','admin'],
         default: 'user'
     },
+    passwordChangedAt: Date,
 },{timestamps: true , versionKey: false})
 
 schema.pre('save',function(){
