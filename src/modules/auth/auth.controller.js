@@ -10,7 +10,6 @@ const signup =catchError(async(req,res,next)=>{
     await user.save()
     let token = jwt.sign({userId:user._id,email:user.email},'aykey')
     res.json({message:"success",token})
-     
 })
 
 
@@ -68,6 +67,8 @@ const protectedRoutes =catchError(async(req,res,next)=>{
     //3- check userId
     //4- token 
 })
+
+
 
 // const verify = catchError(async(req,res,next)=>{
 //     jwt.verify(req.params.token,process.env.JWT_KEY,async(err,decoded)=>{

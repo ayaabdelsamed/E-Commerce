@@ -29,7 +29,7 @@ const getSingleCategory = catchError(async(req,res,next)=>{
 const updateCategory = catchError(async(req,res,next)=>{
     req.body.slug = slugify(req.body.name)
     if(req.file) req.body.image = req.file.filename
-    let category =await categoryModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
+    let category =await categoryModel.findByIdAndUpdate(req.params.id,req.body,{new:true}) // new عشان ترجع ال doc بعد الابديت
     category || next(new AppError('Category not found',404))
     !category || res.json({message:"success",category})
 })

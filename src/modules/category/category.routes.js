@@ -15,7 +15,7 @@ categoryRouter.route('/')
 
 categoryRouter.route('/:id')
     .get(getSingleCategory)
-    .put(uploadSingleFile('image','categories'),updateCategory)
-    .delete(deleteCategory)
+    .put(protectedRoutes,uploadSingleFile('image','categories'),updateCategory)
+    .delete(protectedRoutes,deleteCategory)
 
 export default categoryRouter
