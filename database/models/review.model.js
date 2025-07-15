@@ -26,4 +26,4 @@ const schema = mongoose.Schema({
     
 },{timestamps: true , versionKey: false})
 
-export const reviewModel=mongoose.model('review',scrollXchema);
+export const reviewModel=mongoose.model('review',schema);

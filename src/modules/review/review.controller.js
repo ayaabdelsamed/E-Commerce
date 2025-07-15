@@ -5,6 +5,10 @@ import { deleteOne } from '../handlers/handlers.js'
 
 const addReview = catchError(async(req,res,next)=>{
     req.body.user = req.user._id
+
+    let isExist = await reviewModel.findOne({user: req.user._id,product:req.body.product})
+    if(isExist) return next(new AppError('You created a review before',409))
+    
     let review = new reviewModel(req.body) // بيرجع الكودل قبل ما يتسيف
     await review.save()
     res.json({message:"success",review})
