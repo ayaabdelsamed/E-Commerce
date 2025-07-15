@@ -16,7 +16,7 @@ const schema = mongoose.Schema({
         type: Types.ObjectId,
         ref: 'product'
     },
-    rate: {
+    rate: { 
         type: Number,
         min: 0,
         max: 5,
@@ -25,5 +25,9 @@ const schema = mongoose.Schema({
     
     
 },{timestamps: true , versionKey: false})
+
+schema.pre(/^find/,function(){
+    this.populate('user','name')
+})
 
 export const reviewModel=mongoose.model('review',schema);
