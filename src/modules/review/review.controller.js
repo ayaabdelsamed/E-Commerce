@@ -28,8 +28,8 @@ const getSingleReview = catchError(async(req,res,next)=>{
 })
 
 const updateReview = catchError(async(req,res,next)=>{
-    let review =await reviewModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
-    review || next(new AppError('review not found',404))
+    let review =await reviewModel.findOneAndUpdate({_id: req.params.id,user:req.user._id},req.body,{new:true})
+    review || next(new AppError('review not found or you are not created review ',404))
     !review || res.json({message:"success",review})
 })
 
