@@ -21,7 +21,7 @@ const getAllProducts = catchError(async(req,res,next)=>{
     if(req.query.page < 1) pageNumber=1
     const limit = 2
     let skip = (pageNumber - 1) * limit
-    let products =await productModel.find().skip(0).limit(limit)
+    let products =await productModel.find().skip(skip).limit(limit)
     res.json({message:"success",products,pageNumber})
 })
 
