@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import bcrypt from 'bcrypt'
 
 const schema = mongoose.Schema({
@@ -37,6 +37,12 @@ const schema = mongoose.Schema({
         default: 'user'
     },
     passwordChangedAt: Date,
+    wishlist:[{type:Types.ObjectId,ref:"Product"}],
+    addresses:[{
+        city:String,
+        phone:String,
+        street:String
+    }]
 },{timestamps: true , versionKey: false})
 
 schema.pre('save',function(){

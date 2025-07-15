@@ -6,6 +6,7 @@ import productRouter from "./product/product.routes.js"
 import reviewRouter from "./review/review.routes.js"
 import subCategoryRouter from "./subcategory/subcategory.routes.js"
 import userRouter from "./user/user.routes.js"
+import wishlistRouter from "./wishlist/wishlist.routes.js"
 
 
 export const bootstrap=(app)=>{
@@ -16,5 +17,6 @@ export const bootstrap=(app)=>{
     app.use('/api/v1/users',userRouter)
     app.use('/api/v1/auth',authRouter)
     app.use('/api/v1/reviews',reviewRouter)
+    app.use('/api/v1/wishlist',wishlistRouter)
     app.use(globalError)
 }
