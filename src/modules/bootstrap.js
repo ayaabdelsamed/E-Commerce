@@ -1,4 +1,5 @@
 import { globalError } from "../middleware/globalError.js"
+import addressRouter from "./address/address.routes.js"
 import authRouter from "./auth/auth.routes.js"
 import brandRouter from "./brand/brand.routes.js"
 import categoryRouter from "./category/category.routes.js"
@@ -18,5 +19,6 @@ export const bootstrap=(app)=>{
     app.use('/api/v1/auth',authRouter)
     app.use('/api/v1/reviews',reviewRouter)
     app.use('/api/v1/wishlist',wishlistRouter)
+    app.use('/api/v1/addresses',addressRouter)
     app.use(globalError)
 }
