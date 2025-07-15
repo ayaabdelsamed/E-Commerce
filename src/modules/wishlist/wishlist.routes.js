@@ -8,6 +8,6 @@ wishlistRouter.route('/')
     .patch(protectedRoutes,allowedTo('user'),addToWishlist)
     .get(protectedRoutes,allowedTo('user'),getLoggedUserWishlist)
 wishlistRouter.route('/:id')
-    .patch(protectedRoutes,allowedTo('user','admin'),removeFromWishlist)
+    .delete(protectedRoutes,allowedTo('user','admin'),removeFromWishlist)
 
 export default wishlistRouter
