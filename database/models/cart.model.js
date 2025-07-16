@@ -22,8 +22,8 @@ const schema = mongoose.Schema({
     totalCartPrice: Number,
     discount: Number,
     totalCartPriceAfterDiscount:Number,
-    
+
 },{timestamps: true , versionKey: false})
 
 
-export const cartModel=mongoose.model('brand',schema);
+export const cartModel=mongoose.model('cart',schema);

@@ -2,6 +2,7 @@ import { AppError } from "../../utils/appError.js"
 import { catchError } from "../../middleware/catchError.js"
 import { cartModel } from "../../../database/models/cart.model.js"
 import { productModel } from "../../../database/models/product.model.js"
+import { couponModel } from "../../../database/models/coupon.model.js";
 
 
 function calcTotalPrice(isCartExist){
@@ -9,6 +10,12 @@ function calcTotalPrice(isCartExist){
         isCartExist.cartItems.forEach(item =>{
             totalCartPrice += item.quantity * item.price
         })
+
+    if(isCartExist.discount) {
+        isCartExist.totalCartPriceAfterDiscount = 
+            isCartExist.totalCartPrice - (isCartExist.totalCartPrice * isCartExist.discount) / 100
+    }
+        
 }
 
 const addToCart = catchError(async(req,res,next)=>{
@@ -77,10 +84,21 @@ const clearUserCart = catchError(async(req,res,next)=>{
     res.json({message:"success", cart})
 })
 
+const applyCoupon = catchError(async(req,res,next)=>{
+    let coupon =await couponModel.findOne({ code: req.body.code, expires: { $gte: Date.now() } })
+    if(!coupon) return next(new AppError('Opps Coupon Invalid',404))
+    let cart = await cartModel.findOne({ user: req.user._id })
+    cart.discount = coupon.discount
+    await cart.save()
+
+    res.json({message:"success", cart})
+})
+
 export {
     addToCart,
     updateQuantity,
     removeItemFromCart,
     getLoggedUsercart,
     clearUserCart,
+    applyCoupon
 }
